@@ -20,15 +20,20 @@ def dijkstra(graph, start):
 
     return distances
 
-# Contoh penggunaan:
-graph = {
-    'A': {'B': 1, 'C': 4},
-    'B': {'A': 1, 'C': 2, 'D': 5},
-    'C': {'A': 4, 'B': 2, 'D': 1},
-    'D': {'B': 5, 'C': 1}
-}
+def newton_raphson(f, df, x0, tol=1e-6, max_iter=100):
+    x = x0
+    for i in range(max_iter):
+        x_new = x - f(x) / df(x)
+        if abs(x_new - x) < tol:
+            return x_new
+        x = x_new
+    raise ValueError("Metode Newton-Raphson tidak konvergen")
 
-start_vertex = 'A'
-result = dijkstra(graph, start_vertex)
-print(f"Jarak terpendek dari node {start_vertex} ke semua node lainnya:")
-print(result)
+# Contoh penggunaan:
+import math
+
+f = lambda x: x**2 - 4
+df = lambda x: 2*x
+initial_guess = 3.0
+root = newton_raphson(f, df, initial_guess)
+print(f"Akar persamaan: {root}")
